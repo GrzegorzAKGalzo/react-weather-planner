@@ -1,10 +1,4 @@
-import {
-  DropletsIcon,
-  Loader2,
-  LoaderIcon,
-  MapPin,
-  WindIcon,
-} from "lucide-react";
+import { DropletsIcon, Loader2, MapPin, WindIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -109,14 +103,14 @@ function QuickSearch() {
           <div className="bg-accent rounded-lg w-full flex p-3 items-center text-left gap-5 ">
             <DropletsIcon className="text-sky-500" />
             <div>
-              <p>Humidity</p>
+              <p className="text-xs">Humidity</p>
               <p>{quickCityInfo?.main.humidity}%</p>
             </div>
           </div>
           <div className="bg-accent rounded-lg w-full flex p-3 items-center text-left gap-5 ">
             <WindIcon className="text-sky-500" />
             <div>
-              <p>Wind speed</p>
+              <p className="text-xs">Wind speed</p>
               <p>{quickCityInfo?.wind.speed} m/s</p>
             </div>
           </div>
