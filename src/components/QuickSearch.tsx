@@ -1,34 +1,48 @@
-import { MapPin } from "lucide-react";
+import {
+  DropletsIcon,
+  Loader2,
+  LoaderIcon,
+  MapPin,
+  WindIcon,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 
 import { getCityGeoData, getCityWeather } from "@/servicies/api.d.js";
+import { Alert, AlertTitle } from "./ui/alert";
 
 function QuickSearch() {
   const [quickCity, setQuickCity] = useState("");
+  const [quickLoading, setQuickLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [quickCityInfo, setQuickCiyInfo] = useState<any>();
 
   function handleQuickCityInput(e: React.ChangeEvent<HTMLInputElement>) {
     setQuickCity(e.target.value);
   }
   async function searchCity() {
+    setAlertMessage("");
     if (quickCity === "") {
-      alert("Empty");
+      setAlertMessage("Please enter valid city name");
       return;
     }
-
     try {
-      let geo = await getCityGeoData(quickCity);
-      console.log(geo.lat + " " + geo.lon);
-      let weather = await getCityWeather(
-        geo.lat.toString(),
-        geo.lon.toString()
-      );
+      setQuickLoading(true);
+      // let geo = await getCityGeoData(quickCity);
+      // console.log(geo.lat + " " + geo.lon);
+      // let weather = await getCityWeather(
+      //   geo.lat.toString(),
+      //   geo.lon.toString()
+      // );
+      let weather = await getCityWeather("2.2", "2.2");
       console.log(weather);
+      setQuickCiyInfo(weather);
     } catch (e: any) {
       console.log("Error while getting weather for quick check" + e);
     } finally {
+      setQuickLoading(false);
     }
   }
 
@@ -63,9 +77,50 @@ function QuickSearch() {
           onClick={searchCity}
           aria-label="Search"
           className="cursor-pointer"
+          disabled={quickLoading}
         >
-          Search
+          {!quickLoading ? "Search" : <Loader2 className="animate-spin" />}
         </Button>
+      </div>
+      <Alert
+        variant="destructive"
+        className={alertMessage == "" ? "hidden" : ""}
+      >
+        <AlertTitle>Please enter valid city name</AlertTitle>
+      </Alert>
+
+      <div
+        className={`${
+          quickCityInfo == null
+            ? "max-h-0 opacity-0"
+            : "max-h-[500px] opacity-100"
+        } transition-all duration-1000 flex flex-col max-w-full text-center gap-2`}
+      >
+        <h3 className="font-bold text-4xl">{quickCityInfo?.name}</h3>
+        <img
+          src={`https://openweathermap.org/img/wn/${quickCityInfo?.weather[0].icon}@2x.png`}
+          alt={quickCityInfo?.weather[0].description}
+          className="max-h-30 object-contain"
+        />
+        <p className=" text-4xl ">{Math.round(quickCityInfo?.main.temp)}°C</p>
+        {/* <p>{quickCityInfo?.weather[0].main}</p> */}
+        <hr className="py-2" />
+        <div className="flex justify-between gap-5">
+          <div className="bg-accent rounded-lg w-full flex p-3 items-center text-left gap-5 ">
+            <DropletsIcon className="text-sky-500" />
+            <div>
+              <p>Humidity</p>
+              <p>{quickCityInfo?.main.humidity}%</p>
+            </div>
+          </div>
+          <div className="bg-accent rounded-lg w-full flex p-3 items-center text-left gap-5 ">
+            <WindIcon className="text-sky-500" />
+            <div>
+              <p>Wind speed</p>
+              <p>{quickCityInfo?.wind.speed} m/s</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
