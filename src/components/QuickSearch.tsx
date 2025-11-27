@@ -115,20 +115,6 @@ function QuickSearch() {
               <p>{quickCityInfo?.wind.speed} m/s</p>
             </div>
           </ExtraInfoBox>
-          <ExtraInfoBox>
-            <WindIcon className="text-sky-500" />
-            <div>
-              <p className="text-xs">Wind speed</p>
-              <p>{quickCityInfo?.wind.speed} m/s</p>
-            </div>
-          </ExtraInfoBox>
-          <ExtraInfoBox>
-            <WindIcon className="text-sky-500" />
-            <div>
-              <p className="text-xs">Wind speed</p>
-              <p>{quickCityInfo?.wind.speed} m/s</p>
-            </div>
-          </ExtraInfoBox>
         </div>
       </div>
     </div>
