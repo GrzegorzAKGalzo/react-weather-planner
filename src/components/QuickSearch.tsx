@@ -7,6 +7,7 @@ import { useState } from "react";
 
 function QuickSearch() {
   const [quickCity, setQuickCity] = useState("");
+  const APIKEY: string = import.meta.env.VITE_API_KEY;
 
   function handleQuickCityInput(e: React.ChangeEvent<HTMLInputElement>) {
     setQuickCity(e.target.value);
