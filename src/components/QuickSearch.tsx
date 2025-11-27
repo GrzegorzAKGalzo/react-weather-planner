@@ -25,13 +25,12 @@ function QuickSearch() {
     }
     try {
       setQuickLoading(true);
-      // let geo = await getCityGeoData(quickCity);
-      // console.log(geo.lat + " " + geo.lon);
-      // let weather = await getCityWeather(
-      //   geo.lat.toString(),
-      //   geo.lon.toString()
-      // );
-      let weather = await getCityWeather("2.2", "2.2");
+      let geo = await getCityGeoData(quickCity);
+      console.log(geo.lat + " " + geo.lon);
+      let weather = await getCityWeather(
+        geo.lat.toString(),
+        geo.lon.toString()
+      );
       console.log(weather);
       setQuickCiyInfo(weather);
     } catch (e: any) {
