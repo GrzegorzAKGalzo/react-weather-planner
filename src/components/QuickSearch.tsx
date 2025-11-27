@@ -1,23 +1,35 @@
 import { MapPin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 
+import { getCityGeoData, getCityWeather } from "@/servicies/api.d.js";
+
 function QuickSearch() {
   const [quickCity, setQuickCity] = useState("");
-  const APIKEY: string = import.meta.env.VITE_API_KEY;
 
   function handleQuickCityInput(e: React.ChangeEvent<HTMLInputElement>) {
     setQuickCity(e.target.value);
   }
-  function searchCity() {
+  async function searchCity() {
     if (quickCity === "") {
       alert("Empty");
       return;
     }
-    alert("Search " + quickCity);
+
+    try {
+      let geo = await getCityGeoData(quickCity);
+      console.log(geo.lat + " " + geo.lon);
+      let weather = await getCityWeather(
+        geo.lat.toString(),
+        geo.lon.toString()
+      );
+      console.log(weather);
+    } catch (e: any) {
+      console.log("Error while getting weather for quick check" + e);
+    } finally {
+    }
   }
 
   return (
