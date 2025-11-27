@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { getCityGeoData, getCityWeather } from "@/servicies/api.d.js";
 import { Alert, AlertTitle } from "./ui/alert";
+import ExtraInfoBox from "./ExtraInfoBox";
 
 function QuickSearch() {
   const [quickCity, setQuickCity] = useState("");
@@ -99,21 +100,35 @@ function QuickSearch() {
         <p className=" text-4xl ">{Math.round(quickCityInfo?.main.temp)}°C</p>
         {/* <p>{quickCityInfo?.weather[0].main}</p> */}
         <hr className="py-2" />
-        <div className="flex justify-between gap-5">
-          <div className="bg-accent rounded-lg w-full flex p-3 items-center text-left gap-5 ">
+        <div className="grid grid-cols-2 gap-5">
+          <ExtraInfoBox>
             <DropletsIcon className="text-sky-500" />
             <div>
               <p className="text-xs">Humidity</p>
               <p>{quickCityInfo?.main.humidity}%</p>
             </div>
-          </div>
-          <div className="bg-accent rounded-lg w-full flex p-3 items-center text-left gap-5 ">
+          </ExtraInfoBox>
+          <ExtraInfoBox>
             <WindIcon className="text-sky-500" />
             <div>
               <p className="text-xs">Wind speed</p>
               <p>{quickCityInfo?.wind.speed} m/s</p>
             </div>
-          </div>
+          </ExtraInfoBox>
+          <ExtraInfoBox>
+            <WindIcon className="text-sky-500" />
+            <div>
+              <p className="text-xs">Wind speed</p>
+              <p>{quickCityInfo?.wind.speed} m/s</p>
+            </div>
+          </ExtraInfoBox>
+          <ExtraInfoBox>
+            <WindIcon className="text-sky-500" />
+            <div>
+              <p className="text-xs">Wind speed</p>
+              <p>{quickCityInfo?.wind.speed} m/s</p>
+            </div>
+          </ExtraInfoBox>
         </div>
       </div>
     </div>
